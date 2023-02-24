@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Auth from "./Auth";
+import Auth from "./components/Auth";
 
 function App() {
   return (
