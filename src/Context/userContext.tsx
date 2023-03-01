@@ -40,3 +40,11 @@ export default function UserProvider({ children }: any) {
     </UserContext.Provider>
   );
 }
+
+export function useUser() {
+  const userStuff = useContext(UserContext);
+  if (!userStuff) {
+    return null;
+  }
+  return [userStuff.user, userStuff.setUser];
+}
