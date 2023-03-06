@@ -10,6 +10,6 @@ export async function signUpUser(credentials: CreateUser) {
 }
 
 export async function verifyUser() {
-  const res = await get(`${BASE_URL}/me`);
+  const res = await get(`${BASE_URL}/users/me`);
   return res;
 }

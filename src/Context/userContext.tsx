@@ -12,16 +12,26 @@ import { verifyUser } from "../services/auth";
 interface UserStateAndSetters {
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-const UserContext = createContext<UserStateAndSetters | null>(null);
+interface UserProviderProps {
+  children: React.ReactNode;
+}
 
-export default function UserProvider({ children }: any) {
+const UserContext = createContext<UserStateAndSetters>(
+  {} as UserStateAndSetters
+);
+
+export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const verify = async () => {
     const res = await verifyUser();
     if (res.data) setUser(res.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -32,6 +42,8 @@ export default function UserProvider({ children }: any) {
   const stateAndSetters: UserStateAndSetters = {
     user,
     setUser,
+    loading,
+    setLoading,
   };
 
   return (
@@ -42,9 +54,11 @@ export default function UserProvider({ children }: any) {
 }
 
 export function useUser() {
-  const userStuff = useContext(UserContext);
-  if (!userStuff) {
-    return null;
-  }
-  return [userStuff.user, userStuff.setUser];
+  const { user, setUser } = useContext(UserContext);
+  return [user, setUser] as const;
+}
+
+export function useAuthLoading() {
+  const loadingState = useContext(UserContext);
+  return [loadingState?.loading, loadingState?.setLoading];
 }
