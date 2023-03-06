@@ -9,6 +9,11 @@ export async function signUpUser(credentials: CreateUser) {
   return res;
 }
 
+export async function signInUser(credentials: CreateUser) {
+  const res = await post(`${BASE_URL}/users/sessions`, credentials);
+  return res;
+}
+
 export async function verifyUser() {
   const res = await get(`${BASE_URL}/users/me`);
   return res;
