@@ -1,5 +1,5 @@
 import { CreateUser } from "../interfaces/users.interfaces";
-import { get, post } from "./request";
+import { del, get, post } from "./request";
 
 const BASE_URL = "http://localhost:7890";
 // const BASE_URL = "/users";
@@ -16,5 +16,10 @@ export async function signInUser(credentials: CreateUser) {
 
 export async function verifyUser() {
   const res = await get(`${BASE_URL}/users/me`);
+  return res;
+}
+
+export async function logOutUser() {
+  const res = await del(`${BASE_URL}/users/sessions`);
   return res;
 }

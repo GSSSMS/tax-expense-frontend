@@ -12,9 +12,9 @@ export default function Auth() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user && !loading) navigate("displayStuff");
-  });
+  // useEffect(() => {
+  //   if (user && !loading) navigate("displayStuff");
+  // });
 
   const handleSignUp = async () => {
     const { data } = await signUpUser({ email, password });
